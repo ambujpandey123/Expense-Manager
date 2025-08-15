@@ -75,18 +75,18 @@ export function Hero() {
     return (
         <div className="container mx-auto my-2">
             <div>
-                <div className="flex items-center justify-around text-2xl font-medium px-1 lg:px-8">
+                <div className="flex items-center justify-around text-lg md:text-2xl  md:font-medium  px-2 lg:px-8">
                     <h3>Income</h3>
                     <h3>Expense</h3>
                     <h3>Saving</h3>
                 </div>
-                <div className="flex items-center justify-around text-3xl font-bold p-5" >
+                <div className="flex items-center justify-around text:xl  lg:text-3xl font-bold p-5" >
                     <h2 className="text-purple-500 bg-slate-200 py-2 px-5 rounded-lg">{totalIncome}</h2>
                     <h2 className="text-red-400 bg-slate-200 py-2 px-5 rounded-lg">{totalExpense}</h2>
                     <h2 className="text-green-400 bg-slate-200 py-2 px-5 rounded-lg">{totalSaving}</h2>
                 </div>
             </div>
-            <h2 className="text-center font-bold text-2xl my-5">Add Expense</h2>
+            <h2 className="text-center font-bold text-xl md:text-2xl my-5">Add Expense</h2>
             <div className="grid grid-cols-[1fr_2fr_1fr] gap-4 xl:mx-20 p-2">
                 <div className=" border rounded-md focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600">
                     <select id="dropdown" name="dropdown" className="border-2 border-neutral-400 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value={type} onChange={(e) => setType(e.target.value)}>

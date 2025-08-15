@@ -10,3 +10,19 @@ table, th, td {
 select{
   background-color:#f1f5f9 ;
 }
+
+body {
+  font-family: "Merriweather", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;  
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+ 
+table {
+  font-family: "PT Sans Narrow", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+} 
