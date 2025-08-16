@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { finduser } from '../utils/indexDB';
+// eslint-disable-next-line no-unused-vars
+import { motion } from "motion/react"
+import { AnimateLogo } from './motion/animation';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -17,7 +20,7 @@ export default function Header() {
   useEffect(() => {
     async function loaduser() {
       const userEmail = localStorage.getItem('currentUserEmail');
-      if(userEmail){
+      if (userEmail) {
         const user = await finduser(userEmail);
         setUser(user[0]);
       }
@@ -32,11 +35,14 @@ export default function Header() {
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
+              <AnimateLogo>
               <img
+                
                 alt="Expense"
                 src="./logo.png"
                 className="h-14 w-auto"
               />
+              </AnimateLogo>
             </a>
           </div>
           <div className="flex lg:hidden">
@@ -62,21 +68,23 @@ export default function Header() {
                 <p className='font-semibold text-lg text-center'>{userData.name} </p>
                 <p>{userData.email} </p>
               </div> : "Log in"}
-              <span className={userData.email ?"text-3xl":""} aria-hidden="true">&rarr;</span>
+              <span className={userData.email ? "text-3xl" : ""} aria-hidden="true">&rarr;</span>
             </a>
           </div>
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden ">
           <div className="fixed inset-0 z-50" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-slate-200 p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-slate-200 p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 transition-all duration-300">
             <div className="flex items-center justify-between">
               <a href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
+                <AnimateLogo>
                 <img
                   alt="Expense"
                   src="logo.png"
                   className="h-8 w-auto"
                 />
+                </AnimateLogo>
               </a>
               <button
                 type="button"
