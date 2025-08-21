@@ -2,12 +2,12 @@ import { useState } from "react"
 import { addUser, finduser } from "../utils/indexDB";
 import { useNavigate } from "react-router-dom";
 import {
-    AnimateFromDown,
-    AnimateFromLeft,
-    AnimateFromRight,
-    AnimateLogo
+  AnimateFromDownBtn,
+  AnimateFromLeft,
+  AnimateFromRight,
+  AnimateLogo
 }
-    from "./motion/animation";
+  from "./motion/animation";
 
 export default function Example() {
   const [username, setUserName] = useState("");
@@ -134,14 +134,16 @@ export default function Example() {
               </div>
             </AnimateFromRight>
             {errorMsg.length > 0 && <p className="text-center text-red-400 ">{errorMsg}</p>}
-            <AnimateFromDown>
-              <button
-                className=" flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={() => signup()}
-              >
-                Sign up
-              </button>
-            </AnimateFromDown>
+            <AnimateFromDownBtn>
+              <div className="mt-7">
+                <button
+                  className=" flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onClick={() => signup()}
+                >
+                  Sign up
+                </button>
+              </div>
+            </AnimateFromDownBtn>
           </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">

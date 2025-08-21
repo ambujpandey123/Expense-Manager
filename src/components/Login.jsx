@@ -2,7 +2,7 @@ import { useState } from "react";
 import { loginuser } from "../utils/indexDB";
 import { useNavigate } from "react-router-dom";
 import {
-    AnimateFromDown,
+    AnimateFromDownBtn,
     AnimateFromLeft,
     AnimateFromRight,
     AnimateLogo
@@ -103,8 +103,8 @@ export default function Login() {
               </div>
             </AnimateFromRight>
             {errorMsg.length > 0 && <p className="text-center text-red-400 ">{errorMsg}</p>}
-            <AnimateFromDown>
-              <div>
+            <AnimateFromDownBtn>
+              <div className="mt-7">
                 <button
                   onClick={() => login()}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -112,7 +112,7 @@ export default function Login() {
                   Login
                 </button>
               </div>
-            </AnimateFromDown>
+            </AnimateFromDownBtn>
           </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">

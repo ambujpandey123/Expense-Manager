@@ -29,7 +29,7 @@ export default function Header() {
   }, []);
 
   return (
-    <div className="bg-white shadow-xl">
+    <div className="bg-white shadow-xl sticky top-0">
       <header className="inset-x-0 top-0 z-50">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
