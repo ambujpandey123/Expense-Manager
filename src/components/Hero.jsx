@@ -12,12 +12,28 @@ import {
 }
     from "./motion/animation";
 
+function formatLargeNumber(num) {
+    if (num >= 1000000000000) {
+        return (num / 1000000000000).toFixed(2) + 'T';
+    }
+
+    if (num >= 1000000000) {
+        return (num / 1000000000).toFixed(2) + 'B';
+    }
+
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(2) + 'M';
+    }
+
+    return new Intl.NumberFormat('en-US').format(num);
+}
+
 export function Hero() {
     const [userData, setUser] = useState([]);
-    const [type, setType] = useState();
+    const [type, setType] = useState("Select");
     const [desc, setDesc] = useState("");
     const [ammount, setAmmount] = useState();
-    const [inputError, setInputError] = useState(false);
+    const [inputError, setInputError] = useState([false, ""]);
     const [ExpenseData, setExpenseData] = useState([]);
     const [loadData, setLoadData] = useState(true);
     const [totalIncome, setTotalIncome] = useState(0);
@@ -51,6 +67,7 @@ export function Hero() {
     useEffect(() => {
         let totalinc = 0;
         let totalexp = 0;
+        let totalsav = 0;
 
         for (let ies of ExpenseData) {
             if (ies.type === "Income") {
@@ -59,19 +76,35 @@ export function Hero() {
                 totalexp += parseInt(ies.ammount);
             }
         }
+        totalsav = formatLargeNumber(totalinc - totalexp);
+        totalinc = formatLargeNumber(totalinc);
+        totalexp = formatLargeNumber(totalexp);
+
         setTotalIncome(totalinc);
         setTotalExpense(totalexp);
-        setTotalSaving(totalinc - totalexp);
+        setTotalSaving(totalsav);
+
     }, [ExpenseData]);
-    console.log(userData.id);
 
     function Submit() {
-        if (type === "Select" || desc.length < 3 || !ammount) {
-            setInputError(true);
-            setTimeout(() => setInputError(false), 1000);
+        let errorMessage = null;
+
+        if (type === "Select") {
+            errorMessage = "Please select a valid type";
+        } else if (desc.length < 3) {
+            errorMessage = "Description must be at least 3 characters long";
+        } else if (desc.length > 40) {
+            errorMessage = "Description cannot exceed 40 characters";
+        } else if (!ammount || ammount <= 0) {
+            errorMessage = "Amount must be a positive number";
+        } else if (ammount > 1000000000000) {
+            errorMessage = "Amount is too large";
+        }
+        if (errorMessage) {
+            setInputError([true, errorMessage]);
+            setTimeout(() => setInputError([false, ""]), 1500);
             return;
         }
-
 
         if (!userData.id) return
         Savedata(type, desc, ammount, userData.id);
@@ -126,7 +159,7 @@ export function Hero() {
                     </div>
                 </AnimateFromRight>
             </div>
-            {inputError && <p className="text-red-400 text-center p-2">Invalid input</p>}
+            {inputError[0] && <p className="text-red-400 text-center p-2">{inputError[1]}</p>}
             <div className="flex justify-center items-center">
                 <AnimateScaleButton>
                     <button

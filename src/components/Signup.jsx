@@ -17,27 +17,46 @@ export default function Example() {
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   async function signup() {
-    if (!username || !email || !password) {
-      setErrorMsg("all field are requred");
-      return
-    }
-    if (password !== cpassword) {
-      setErrorMsg("password doesn't match");
-      return
-    }
-    setErrorMsg("");
-    const user = await finduser(email);
-    if (user.length > 0) {
-      setErrorMsg("User already exist");
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!username || !email || !password || !cpassword) {
+      setErrorMsg("All fields are required.");
       return;
     }
-    await addUser(username, email, password);
-    localStorage.setItem('currentUserEmail', email);
-    setUserName("");
-    setUserEmail("");
-    setUserPassword("");
-    setUserCPassword("");
-    navigate("/");
+
+    // Regex email validation
+    if (!emailRegex.test(email)) {
+      setErrorMsg("Please enter a valid email address.");
+      return;
+    }
+
+    if (password !== cpassword) {
+      setErrorMsg("Passwords do not match.");
+      return;
+    }
+
+    setErrorMsg(""); // Clear any previous error messages
+
+    try {
+      const user = await finduser(email);
+
+      if (user && user.length > 0) {
+        setErrorMsg("User with this email already exists.");
+        return;
+      }
+
+      await addUser(username, email, password);
+      
+      localStorage.setItem('currentUserEmail', email);
+      setUserName("");
+      setUserEmail("");
+      setUserPassword("");
+      setUserCPassword("");
+      navigate("/");
+    } catch (error) {
+      setErrorMsg("An error occurred during signup. Please try again.");
+      console.error("Signup error:", error);
+    }
   }
   return (
     <>

@@ -2,12 +2,12 @@ import { useState } from "react";
 import { loginuser } from "../utils/indexDB";
 import { useNavigate } from "react-router-dom";
 import {
-    AnimateFromDownBtn,
-    AnimateFromLeft,
-    AnimateFromRight,
-    AnimateLogo
+  AnimateFromDownBtn,
+  AnimateFromLeft,
+  AnimateFromRight,
+  AnimateLogo
 }
-    from "./motion/animation";
+  from "./motion/animation";
 
 export default function Login() {
   const [email, setUserEmail] = useState("");
@@ -15,25 +15,35 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   async function login() {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     if (!email || !password) {
-      setErrorMsg("all field are requred");
-      return
-    }
-
-    setErrorMsg("");
-    const user = await loginuser(email, password);
-    console.log("user: " + user);
-
-    if (user.length > 0) {
-      console.log("login success", email, password, user);
-      localStorage.setItem('currentUserEmail', email);
-      setUserEmail("");
-      setUserPassword("");
-      navigate("/");
-    }
-    else {
-      setErrorMsg("invalid credentials");
+      setErrorMsg("All fields are required.");
       return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setErrorMsg("Please enter a valid email address.");
+      return;
+    }
+
+    setErrorMsg(""); 
+
+    try {
+      const user = await loginuser(email, password);
+
+      if (user && user.length > 0) {
+        console.log("login success", email, password, user);
+        localStorage.setItem('currentUserEmail', email);
+        setUserEmail("");
+        setUserPassword("");
+        navigate("/");
+      } else {
+        setErrorMsg("Invalid credentials.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMsg("An error occurred during login. Please try again.");
     }
   }
   return (
